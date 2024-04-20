@@ -22,7 +22,11 @@ class OCR:
         return switcher.get(argument, "Invalid method")
 
     def get_string_from_image(self, img_path: str, method: str):
-        output_dir = "/home/rem/WORK/NutriScan/OCR/"
+        pwd = os.getcwd()
+
+# Define the relative path for the output directory
+        output_dir = os.path.join(pwd, "NutriScan", "OCR")
+        #output_dir = "/home/rem/WORK/NutriScan/OCR/"
         used_option = ""
 
         # Read image using opencv
