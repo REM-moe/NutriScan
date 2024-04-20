@@ -3,7 +3,7 @@ import pytesseract
 import cv2
 import os
 import numpy as np
-pytesseract.pytesseract.tesseract_cmd = r"C:\Users\REENA\AppData\Local\Programs\Tesseract-OCR\Tesseract.exe"
+#pytesseract.pytesseract.tesseract_cmd = r"C:\Users\REENA\AppData\Local\Programs\Tesseract-OCR\Tesseract.exe"
 
 class OCR:
     @staticmethod
@@ -22,23 +22,22 @@ class OCR:
         return switcher.get(argument, "Invalid method")
 
     def get_string_from_image(self, img_path: str, method: str):
-        output_dir = ""
+        output_dir = "/home/rem/WORK/NutriScan/OCR/"
         used_option = ""
 
         # Read image using opencv
         img = cv2.imread(img_path)
-
         # Extract the file name without the file extension
-        file_name = os.path.basename(img_path).split('.')[0]
-        file_name = file_name.split()[0]
+        file_name = str(os.path.basename(img_path).split('.')[0])  # Convert to string
+
 
         # Create a directory for outputs
-        output_path = os.path.join(output_dir, file_name)
+        output_path = str(os.path.join(output_dir, file_name))
         if not os.path.exists(output_path):
-            os.makedirs(output_path)
+            os.makedirs(output_path, exist_ok=True)
 
         # Rescaling the image
-        img = cv2.resize(img, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
+        img = cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_CUBIC)
 
         # Converting image to gray-scale
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -52,7 +51,7 @@ class OCR:
         img = self.apply_threshold(img, method)
 
         # Save the filtered image in the output directory
-        save_path = os.path.join(output_path, file_name + "_filter_" + str(method) + used_option + ".jpg")
+        save_path = str(os.path.join(output_path, file_name + "_filter_" + str(method) + used_option + ".jpg"))
         cv2.imwrite(save_path, img)
 
         # Recognize text with tesseract for python

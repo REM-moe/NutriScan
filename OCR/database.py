@@ -50,9 +50,8 @@ cursor.execute(""" INSERT INTO substances (name_of_substance, e_code, group_of_s
 ('Sucralose', 'E955', 'Artificial Sweetener', 'Calorie-free sweetener used in beverages and food products', 'Generally recognized as safe, but may cause digestive issues in some individuals'),
 ('Saccharin', 'E954', 'Artificial Sweetener', 'One of the oldest artificial sweeteners, used in various products', 'Linked to cancer in animal studies, but not conclusively proven in humans'),
 ('Xylitol', '', 'Sugar Alcohol', 'Sweetener used in sugar-free gum and candies', 'Can be toxic to dogs and may cause digestive issues in humans if consumed in large amounts'),
-('Stevia', '', 'Natural Sweetener', 'Derived from the leaves of the Stevia plant, used as a sugar substitute', 'Generally considered safe,
-
-            """)
+('Stevia', '', 'Natural Sweetener', 'Derived from the leaves of the Stevia plant, used as a sugar substitute', 'Generally considered safe')
+""")
 
 cursor.execute(""" SELECT * FROM substances WHERE e_code = \"E320\"""")
 print(cursor.fetchall())
