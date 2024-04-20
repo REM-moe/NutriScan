@@ -22,7 +22,8 @@ NutriScan is a Flutter application designed to help you make informed decisions 
 6. Save your favorite items for quick access in the future.
 
 ## images
-![photo_2024-04-20_23-29-31](https://github.com/REM-moe/NutriScan/assets/98999089/a72d0c93-3416-4865-ab34-6743260043b6)
+## images
+<img src="https://github.com/REM-moe/NutriScan/assets/98999089/a72d0c93-3416-4865-ab34-6743260043b6" alt="NutriScan Screenshot" width="300" height="600">
 
 
 ## Contributing
