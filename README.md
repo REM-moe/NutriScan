@@ -48,6 +48,3 @@ Make sure to give execute permissions to the script using `chmod +x run_app.sh`.
 <img src="https://github.com/REM-moe/NutriScan/assets/98999089/a72d0c93-3416-4865-ab34-6743260043b6" alt="NutriScan Screenshot" width="300" height="600">
 
 Thank you for choosing NutriScan to assist you in your journey towards a healthier lifestyle. We hope you find it helpful and empowering. Happy scanning! 🥦📸📊
-
-```
-
