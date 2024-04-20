@@ -3,7 +3,8 @@ import pytesseract
 import cv2
 import os
 import numpy as np
-#pytesseract.pytesseract.tesseract_cmd = r"C:\Users\REENA\AppData\Local\Programs\Tesseract-OCR\Tesseract.exe"
+#pytesseract.pytesseract.tesseract_cmd = r"CTesseract-OCR\Tesseract.exe" - windows
+# fro linux sudo apt install 
 
 class OCR:
     @staticmethod
