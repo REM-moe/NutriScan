@@ -102,7 +102,7 @@ class _UploadButtonState extends State<UploadButton> {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://192.168.126.241:50001/upload'),
+        Uri.parse('http://172.20.203.123:50001/upload'),
       );
       request.files.add(await http.MultipartFile.fromPath('image', image.path));
       var response = await request.send();

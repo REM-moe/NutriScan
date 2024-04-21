@@ -3,8 +3,7 @@ import pytesseract
 import cv2
 import os
 import numpy as np
-#pytesseract.pytesseract.tesseract_cmd = r"CTesseract-OCR\Tesseract.exe" - windows
-# fro linux sudo apt install 
+#pytesseract.pytesseract.tesseract_cmd = r"C:\Users\REENA\AppData\Local\Programs\Tesseract-OCR\Tesseract.exe"
 
 class OCR:
     @staticmethod
@@ -23,11 +22,7 @@ class OCR:
         return switcher.get(argument, "Invalid method")
 
     def get_string_from_image(self, img_path: str, method: str):
-        pwd = os.getcwd()
-
-# Define the relative path for the output directory
-        output_dir = os.path.join(pwd, "NutriScan", "OCR")
-        #output_dir = "/home/rem/WORK/NutriScan/OCR/"
+        output_dir = "/home/rem/WORK/NutriScan/OCR/"
         used_option = ""
 
         # Read image using opencv
