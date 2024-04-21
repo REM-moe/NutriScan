@@ -22,7 +22,7 @@ class OCR:
         return switcher.get(argument, "Invalid method")
 
     def get_string_from_image(self, img_path: str, method: str):
-        output_dir = "/home/rem/WORK/NutriScan/OCR/"
+        output_dir = "/home/rem/WORK/NutriScan/OCR/results"
         used_option = ""
 
         # Read image using opencv
