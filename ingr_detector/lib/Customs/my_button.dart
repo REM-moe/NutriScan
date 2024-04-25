@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ingr_detector/pages/result.dart';
 import 'package:http/http.dart' as http;
+import 'package:ingr_detector/pages/result.dart';
 
 class UploadButton extends StatefulWidget {
-  const UploadButton({super.key});
+  const UploadButton({Key? key}) : super(key: key);
 
   @override
   State<UploadButton> createState() => _UploadButtonState();
@@ -12,14 +12,7 @@ class UploadButton extends StatefulWidget {
 
 class _UploadButtonState extends State<UploadButton> {
   final ImagePicker _picker = ImagePicker();
-
-  // ignore: unused_field
-  XFile? _image;
-
-  void gotoresultpage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const MyResult()));
-  }
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,49 +28,25 @@ class _UploadButtonState extends State<UploadButton> {
             subtitle: const Text("click to open gallery"),
             leading: Image.asset("lib/images/chai.png"),
             trailing: const Icon(Icons.upload),
-            onTap: () => {
-              getImageFromGallery(),
-            },
+            onTap: () => getImageFromGallery(),
           ),
-          SizedBox(height: 10, child: Container()),
+          SizedBox(height: 10),
           ListTile(
             title: const Text("Capture"),
             subtitle: const Text("click to capture image"),
             leading: Image.asset("lib/images/coffee.png"),
             trailing: const Icon(Icons.camera_alt),
-            onTap: () => {
-              getImageFromCamera(),
-            },
+            onTap: () => getImageFromCamera(),
           ),
-          if (_image != null) // Check if _image is not null
-            FutureBuilder<bool>(
-                future: uploadImage(
-                    _image!), // Just pass _image to uploadImage directly
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(); // Show loading indicator while uploading
-                  } else {
-                    if (snapshot.hasError) {
-                      return const Text(
-                          'Error: Failed to upload image. Please try again.'); // Friendly error message
-                    } else {
-                      if (snapshot.data == true) {
-                        // Image uploaded successfully, navigate to a new page
-                        Future.delayed(const Duration(seconds: 2), () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyResult()),
-                          );
-                        });
-                        return const Text('Image uploaded successfully');
-                      } else {
-                        return const Text(
-                            'Failed to upload image. Please check your internet connection and try again.'); // Informative failure message
-                      }
-                    }
-                  }
-                }),
+          Visibility(
+            visible: _loading,
+            child: Container(
+              color: Colors.transparent,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -85,24 +54,39 @@ class _UploadButtonState extends State<UploadButton> {
 
   Future getImageFromGallery() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
+    if (image != null) {
+      uploadAndNavigate(image);
+    }
   }
 
   Future getImageFromCamera() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      uploadAndNavigate(image);
+    }
+  }
 
+  Future<void> uploadAndNavigate(XFile image) async {
     setState(() {
-      _image = image;
+      _loading = true;
     });
+    bool uploaded = await uploadImage(image);
+    setState(() {
+      _loading = false;
+    });
+    if (uploaded) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Myresults()),
+      );
+    }
   }
 
   Future<bool> uploadImage(XFile image) async {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://172.20.203.123:50001/upload'),
+        Uri.parse('http://192.168.153.83:5000/upload'),
       );
       request.files.add(await http.MultipartFile.fromPath('image', image.path));
       var response = await request.send();
@@ -117,5 +101,19 @@ class _UploadButtonState extends State<UploadButton> {
       print('Error uploading image: $e');
       return false;
     }
+  }
+}
+
+class NewPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('New Page'),
+      ),
+      body: Center(
+        child: Text('You have successfully uploaded an image!'),
+      ),
+    );
   }
 }

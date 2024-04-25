@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import os
 from datetime import datetime
 from nutri_logic import NutriScan
@@ -27,16 +27,29 @@ def upload_image():
     nutri = NutriScan(file_path)
     result = nutri.scan()
     print(result)
+    with open("getresult.txt", 'w') as f:
+            f.write(result)
 
     # Return 'Safe' if result is empty
     if not result:
         return jsonify({'result': 'Safe'}), 200
 
     # Otherwise, format the result as a list of dictionaries
-    
+
     print(result)
     return jsonify({'result': result}), 200
 
+@app.route('/get', methods=['GET'])
+def get_result():
+    # Check if the Getresult file exists
+    file_path = "getresult.txt"
+        # Read the content of the file
+    with open(file_path, 'r') as f:
+            content = f.read()
+        # Clear the file
+    content = "**" + content +"**"
+    return content
+    
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
-
