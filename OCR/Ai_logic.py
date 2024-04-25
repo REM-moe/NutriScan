@@ -11,7 +11,7 @@ class GenaerateResults:
         with open(self.filepath, 'r') as file:
             senetence = file.read()
         
-        genai.configure(api_key="AIzaSyBCcwqQ53hg2wsN7oRzdA9-OtJvnCcQCuw")
+        genai.configure(api_key="YOUR_API_KEY")
         generation_config = {
             "temperature": 0.9,
             "top_p": 1,
