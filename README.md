@@ -45,8 +45,7 @@ Make sure to give execute permissions to the script using `chmod +x run_app.sh`.
 
 ```
 ## images
-<img src="https://github.com/REM-moe/NutriScan/assets/98999089/a72d0c93-3416-4865-ab34-6743![Uploading result1.jpg…]()
-260043b6" alt="NutriScan Screenshot" width="300" height="600">
+
 
 
 
