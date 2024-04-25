@@ -26,7 +26,6 @@ def upload_image():
 
     nutri = NutriScan(file_path)
     result = nutri.scan()
-    print(result)
     with open("getresult.txt", 'w') as f:
             f.write(result)
 
@@ -47,7 +46,7 @@ def get_result():
     with open(file_path, 'r') as f:
             content = f.read()
         # Clear the file
-    content = "**" + content +"**"
+
     return content
     
 

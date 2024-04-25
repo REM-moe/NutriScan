@@ -10,6 +10,8 @@ class Myresults extends StatefulWidget {
 
 class _MyresultsState extends State<Myresults> {
   String? _result;
+  bool _isLoading = false;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -18,18 +20,34 @@ class _MyresultsState extends State<Myresults> {
   }
 
   Future<void> fetchData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.153.83:5000/get'));
+          await http.get(Uri.parse('http://192.168.153.142:5000/get'));
       if (response.statusCode == 200) {
         setState(() {
           _result = response.body;
         });
       } else {
-        print('Failed to fetch data: ${response.statusCode}');
+        setState(() {
+          _errorMessage = 'Failed to fetch data: ${response.statusCode}';
+        });
+        // ignore: avoid_print
+        print(_errorMessage);
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      setState(() {
+        _errorMessage = 'Error fetching data: $e';
+      });
+      // ignore: avoid_print
+      print(_errorMessage);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -38,60 +56,35 @@ class _MyresultsState extends State<Myresults> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Results'),
-        backgroundColor: Colors.brown[200], // Change the app bar color
+        backgroundColor: Colors.brown[200],
       ),
-      body: _result != null
-          ? Center(
-              child: _result!.contains(
-                      'This context does not mention anything about ingredients or things that are consumed')
-                  ? Text('No relevant information available')
-                  : ListView(
-                      padding: const EdgeInsets.all(
-                          8), // Increase padding for better spacing
-                      children: _result!.split('\n\n').map((result) {
-                        final parts = result.split(':');
-                        if (parts.length == 2) {
-                          final title = parts[0].trim();
-                          final subtitle = parts[1].trim();
-                          return Card(
-                            elevation: 3, // Add elevation to Card
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 4,
-                                horizontal: 8), // Add margin to Card
-                            child: ListTile(
-                              title: Text(
-                                title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color:
-                                        Colors.black87), // Change title color
-                              ),
-                              subtitle: Text(
-                                subtitle,
-                                style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors
-                                        .black54), // Change subtitle color
-                              ),
-                              leading: Image.asset("lib/images/coffee.png"),
-                              trailing: const Icon(Icons.warning),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal:
-                                      16), // Add content padding to ListTile
-                            ),
-                          );
-                        } else {
-                          return const Center(
-                            child: SizedBox(child: Text("No info Found")),
-                          ); // Return an empty SizedBox if parts doesn't have enough elements
-                        }
-                      }).toList(),
-                    ),
-            )
-          : const Center(
+      body: _isLoading
+          ? const Center(
               child: CircularProgressIndicator(),
-            ),
+            )
+          : _errorMessage.isNotEmpty
+              ? Center(
+                  child: Text(
+                    _errorMessage,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                )
+              : _result != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SingleChildScrollView(
+                        child: Text(
+                          _result!,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    )
+                  : const Center(
+                      child: Text(
+                        'No data available',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
     );
   }
 }
