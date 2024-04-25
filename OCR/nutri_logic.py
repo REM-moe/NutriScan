@@ -1,5 +1,5 @@
-from Ingredient_Finder import Ingredient_Find
 from OCR import OCR
+from Ai_logic import GenaerateResults
 
 def read_file_content(file_path):
     try:
@@ -22,8 +22,8 @@ class NutriScan:
         oc = OCR()
         recognized_text, text_file_path = oc.get_string_from_image(f"{self.image}", "bilateralFilter")
         file_path = f"{text_file_path}"
-        matched_substance = read_file_content(file_path=file_path)
+        #matched_substance = read_file_content(file_path=file_path)
         
-        IL = Ingredient_Find(matched_substance)
-        results = IL.ing_search()
+        GetInfo = GenaerateResults(file_path)
+        results = GetInfo.get_answer()
         return results

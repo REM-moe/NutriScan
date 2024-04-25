@@ -22,7 +22,8 @@ class _MyResultState extends State<MyResult> {
   Future<void> fetchData() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.126.241:50001/upload'));
+          await http.get(Uri.parse('http://127.0.0.1:5000/upload'));
+      print(response);
       if (response.statusCode == 200) {
         final decodedResponse = jsonDecode(response.body);
         setState(() {
