@@ -30,7 +30,7 @@ class _UploadButtonState extends State<UploadButton> {
             trailing: const Icon(Icons.upload),
             onTap: () => getImageFromGallery(),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ListTile(
             title: const Text("Capture"),
             subtitle: const Text("click to capture image"),
@@ -42,7 +42,7 @@ class _UploadButtonState extends State<UploadButton> {
             visible: _loading,
             child: Container(
               color: Colors.transparent,
-              child: Center(
+              child: const Center(
                 child: CircularProgressIndicator(),
               ),
             ),
@@ -77,7 +77,7 @@ class _UploadButtonState extends State<UploadButton> {
     if (uploaded) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Myresults()),
+        MaterialPageRoute(builder: (context) => const Myresults()),
       );
     }
   }
@@ -86,7 +86,7 @@ class _UploadButtonState extends State<UploadButton> {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://192.168.153.144:5000/upload'),
+        Uri.parse('http://192.168.248.241:5000/upload'),
       );
       request.files.add(await http.MultipartFile.fromPath('image', image.path));
       var response = await request.send();
@@ -109,9 +109,9 @@ class NewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Page'),
+        title: const Text('New Page'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('You have successfully uploaded an image!'),
       ),
     );
