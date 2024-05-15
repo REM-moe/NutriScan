@@ -26,7 +26,7 @@ class _MyresultsState extends State<Myresults> {
 
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.248.241:5000/get'));
+          await http.get(Uri.parse('http://172.20.203.123:5000/get'));
       if (response.statusCode == 200) {
         setState(() {
           _result = response.body;
