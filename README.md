@@ -37,6 +37,14 @@ Make sure to give execute permissions to the script using `chmod +x run_app.sh`.
 5. Use the information to make informed decisions about the food you consume.
 6. Save your favorite items for quick access in the future.
 ```
+
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/REM-moe/NutriScan/assets/98999089/b6dbf604-0a8b-47ba-abc2-790acffa136f" width="300">
+  <img src="https://github.com/REM-moe/NutriScan/assets/98999089/3d2ad00d-ac53-4f81-8199-8bee4371c23f" width="300">
+  <img src="https://github.com/REM-moe/NutriScan/assets/98999089/78be64db-128a-4394-afc7-9530c4faf701" width="300">
+</div>
+
+
 ## Troubleshooting
 ```diff
  - Ensure both your device and the server (Flask backend) are on the same network, 
